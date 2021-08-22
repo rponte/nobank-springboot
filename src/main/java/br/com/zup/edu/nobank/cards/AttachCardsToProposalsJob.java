@@ -48,17 +48,23 @@ public class AttachCardsToProposalsJob {
 
         logger.info("Verifying eligible proposals that have no attached cards yet...");
 
-        List<Proposal> eligibleProposals = proposalRepository.findTop50ByStatusOrderByCreatedAtAsc(ProposalStatus.ELIGIBLE);
-        eligibleProposals.forEach(proposal -> {
+        while (true) {
+            List<Proposal> eligibleProposals = proposalRepository.findTop50ByStatusOrderByCreatedAtAsc(ProposalStatus.ELIGIBLE);
+            if (eligibleProposals.isEmpty()) {
+                break;
+            }
 
-            CardDataResponse cardData = cardsClient.findCardByProposalId(proposal.getId());
+            eligibleProposals.forEach(proposal -> {
 
-            Card newCard = cardData.toModel();
-            cardRepository.save(newCard);
+                CardDataResponse cardData = cardsClient.findCardByProposalId(proposal.getId());
 
-            logger.info("Attaching card '{}' to proposal '{}'", newCard.getCardNumber(), proposal.getId());
-            proposal.attachTo(newCard);
-            proposalRepository.save(proposal);
-        });
+                Card newCard = cardData.toModel();
+                cardRepository.save(newCard);
+
+                logger.info("Attaching card '{}' to proposal '{}'", newCard.getCardNumber(), proposal.getId());
+                proposal.attachTo(newCard);
+                proposalRepository.save(proposal);
+            });
+        }
     }
 }
