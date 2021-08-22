@@ -42,7 +42,6 @@ public class AttachCardsToProposalsJob {
      * 9. error handling? timeout, retries, idempotence
      * 10. What if...
      */
-    @Transactional
     @Scheduled(fixedDelay = ONE_MINUTE)
     public void execute() {
 
