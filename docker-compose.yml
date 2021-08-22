@@ -1,0 +1,17 @@
+version: '3.1'
+
+services:
+  postgres:
+    image: "postgres:13.3"
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    volumes:
+      - database-data:/var/lib/postgresql/data/ # persist data even if container shuts down
+      - ./bootstrap:/docker-entrypoint-initdb.d
+
+volumes:
+  database-data: # named volumes can be managed easier using docker-compose
