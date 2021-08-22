@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -26,6 +27,9 @@ public class AttachCardsToProposalsJob {
     private CardRepository cardRepository;
     @Autowired
     private ProposalRepository proposalRepository;
+
+    @Autowired
+    private TransactionTemplate transactionManager;
 
     /**
      * Scenarios:
@@ -47,22 +51,29 @@ public class AttachCardsToProposalsJob {
 
         logger.info("Verifying eligible proposals that have no attached cards yet...");
 
-        while (true) {
-            List<Proposal> eligibleProposals = proposalRepository.findTop50ByStatusOrderByCreatedAtAsc(ProposalStatus.ELIGIBLE);
-            if (eligibleProposals.isEmpty()) {
-                break;
-            }
+        boolean pending = true;
+        while (pending) {
+            //noinspection ConstantConditions
+            pending = transactionManager.execute(transactionStatus -> {
 
-            eligibleProposals.forEach(proposal -> {
+                List<Proposal> eligibleProposals = proposalRepository.findTop50ByStatusOrderByCreatedAtAsc(ProposalStatus.ELIGIBLE);
+                if (eligibleProposals.isEmpty()) {
+                    return false;
+                }
 
-                CardDataResponse cardData = cardsClient.findCardByProposalId(proposal.getId());
+                eligibleProposals.forEach(proposal -> {
 
-                Card newCard = cardData.toModel();
-                cardRepository.save(newCard);
+                    CardDataResponse cardData = cardsClient.findCardByProposalId(proposal.getId());
 
-                logger.info("Attaching card '{}' to proposal '{}'", newCard.getCardNumber(), proposal.getId());
-                proposal.attachTo(newCard);
-                proposalRepository.save(proposal);
+                    Card newCard = cardData.toModel();
+                    cardRepository.save(newCard);
+
+                    logger.info("Attaching card '{}' to proposal '{}'", newCard.getCardNumber(), proposal.getId());
+                    proposal.attachTo(newCard);
+                    proposalRepository.save(proposal);
+                });
+
+                return true;
             });
         }
     }
