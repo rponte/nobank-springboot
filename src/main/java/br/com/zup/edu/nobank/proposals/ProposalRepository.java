@@ -11,6 +11,6 @@ public interface ProposalRepository extends JpaRepository<Proposal, UUID> {
 
     public boolean existsByDocument(String document);
 
-    public List<Proposal> findAllByStatusOrderByCreatedAtAsc(ProposalStatus eligible);
+    public List<Proposal> findTop50ByStatusOrderByCreatedAtAsc(ProposalStatus eligible);
 
 }

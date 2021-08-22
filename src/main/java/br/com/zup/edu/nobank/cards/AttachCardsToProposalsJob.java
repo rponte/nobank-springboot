@@ -48,7 +48,7 @@ public class AttachCardsToProposalsJob {
 
         logger.info("Verifying eligible proposals that have no attached cards yet...");
 
-        List<Proposal> eligibleProposals = proposalRepository.findAllByStatusOrderByCreatedAtAsc(ProposalStatus.ELIGIBLE);
+        List<Proposal> eligibleProposals = proposalRepository.findTop50ByStatusOrderByCreatedAtAsc(ProposalStatus.ELIGIBLE);
         eligibleProposals.forEach(proposal -> {
 
             CardDataResponse cardData = cardsClient.findCardByProposalId(proposal.getId());
