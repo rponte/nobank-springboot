@@ -1,0 +1,13 @@
+{
+  "request": {
+    "url": "/api/solicitacao",
+    "method": "POST"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "bodyFileName" : "proposal-eligible.json"
+  }
+}

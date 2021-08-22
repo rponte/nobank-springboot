@@ -41,6 +41,12 @@ public class Proposal {
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
+    public String getDocument() {
+        return document;
+    }
+    public String getName() {
+        return name;
+    }
 
     public void updateStatus(ProposalStatus status) {
 

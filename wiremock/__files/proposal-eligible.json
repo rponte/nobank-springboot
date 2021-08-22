@@ -1,0 +1,6 @@
+{
+  "idProposta": "{{jsonPath request.body '$.idProposta'}}",
+  "documento": "{{jsonPath request.body '$.documento'}}",
+  "nome": "{{jsonPath request.body '$.nome'}}",
+  "resultadoSolicitacao": "SEM_RESTRICAO"
+}
