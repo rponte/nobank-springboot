@@ -42,7 +42,7 @@ public class AttachCardsToProposalsJob {
      * 5. cluster? Top50 + transactionManager + synchronized = fail
      * 6. cluster? Top50 + transactionManager + FOR UPDATE = work but 1 node only
      * 7. cluster? Top50 + transactionManager + FOR UPDATE SKIP LOCKED = WOW!
-     * 8. performance? Hibernate batch size
+     * 8. performance? Hibernate batch size, initialDelay=xxx
      * 9. error handling? timeout, retries, idempotence
      * 10. What if...
      */
