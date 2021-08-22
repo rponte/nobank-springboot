@@ -1,0 +1,5 @@
+{
+  "proposalId": "{{request.query.proposalId}}",
+  "cardNumber": "{{randomValue length=4 type='NUMERIC'}}-{{randomValue length=4 type='NUMERIC'}}-{{randomValue length=4 type='NUMERIC'}}-{{randomValue length=4 type='NUMERIC'}}",
+  "cardHolderName": "Card Holder Name {{randomValue type='UUID'}}"
+}

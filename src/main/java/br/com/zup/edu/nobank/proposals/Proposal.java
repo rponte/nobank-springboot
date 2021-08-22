@@ -1,5 +1,7 @@
 package br.com.zup.edu.nobank.proposals;
 
+import br.com.zup.edu.nobank.cards.Card;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -27,6 +29,9 @@ public class Proposal {
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt = LocalDateTime.now();
 
+    @Deprecated
+    protected Proposal(){}
+
     public Proposal(String document, String email, String name, String address, BigDecimal salary) {
         this.document = document;
         this.email = email;
@@ -48,6 +53,9 @@ public class Proposal {
         return name;
     }
 
+    /**
+     * Updates the proposal status
+     */
     public void updateStatus(ProposalStatus status) {
 
         if (status == null)
@@ -57,4 +65,19 @@ public class Proposal {
         this.updatedAt = LocalDateTime.now();
     }
 
+    /**
+     * Attaches a new created and active card to this proposal
+     */
+    public void attachTo(Card activeCard) {
+        if (activeCard == null) {
+            throw new IllegalArgumentException("Impossible to attach this proposal to a card: card can not be null");
+        }
+        /**
+         * TIP:
+         * Fortunately, for this domain, a proposal does not need to know which card it's attached to,
+         * that's why there's no association in proposal-side (I mean, an @OneToOne mapping).
+         */
+        activeCard.setProposalId(this.id); // Just to keep some consistence between the entities.
+        this.updateStatus(ProposalStatus.ELIGIBLE_WITH_ATTACHED_CARD);
+    }
 }

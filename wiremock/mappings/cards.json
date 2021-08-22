@@ -1,0 +1,13 @@
+{
+  "request": {
+    "urlPath": "/api/cards",
+    "method": "GET"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "bodyFileName" : "card-found.json"
+  }
+}
