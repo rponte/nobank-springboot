@@ -1,5 +1,7 @@
-package br.com.zup.edu.nobank.cards;
+package br.com.zup.edu.nobank;
 
+import br.com.zup.edu.nobank.cards.Card;
+import br.com.zup.edu.nobank.cards.CardRepository;
 import br.com.zup.edu.nobank.cards.integration.CardDataResponse;
 import br.com.zup.edu.nobank.cards.integration.CardsClient;
 import br.com.zup.edu.nobank.proposals.Proposal;
@@ -12,13 +14,13 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import jakarta.transaction.Transactional;
 import java.util.List;
 
 @Component
 public class AttachCardsToProposalsJob {
 
     private static final long ONE_MINUTE = 60*1000;
+    private static final long TEN_SECONDS = 10*1000;
     private static final Logger logger = LoggerFactory.getLogger(AttachCardsToProposalsJob.class);
 
     @Autowired
@@ -54,7 +56,10 @@ public class AttachCardsToProposalsJob {
      *  9.2. bulkhead pattern: avoid shared connection pool
      * 11. What if...
      */
-    @Scheduled(initialDelay = ONE_MINUTE, fixedDelay = ONE_MINUTE)
+    @Scheduled(
+        fixedDelay = ONE_MINUTE,
+        initialDelay = TEN_SECONDS // waits 10s before starting
+    )
     public void execute() {
 
         logger.info("Verifying eligible proposals that have no attached cards yet...");
