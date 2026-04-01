@@ -1,0 +1,73 @@
+##
+# Spring configuration
+##
+spring:
+  output:
+    ansi:
+      enabled: ALWAYS
+
+  ##
+  # DataSource configuration
+  ##
+  datasource:
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+  sql:
+    init:
+      platform: postgres
+
+  ##
+  # JPA/Hibernate configuration
+  ##
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        # batch size
+        jdbc:
+          batch_size: 50
+          order_inserts: true
+          order_updates: true
+
+  ##
+  # Integrations
+  ##
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            logger-level: basic
+          financialAnalysisClient:
+            url: http://localhost:9999/
+            logger-level: full
+          cardsClient:
+            url: http://localhost:9999/
+            logger-level: basic
+
+##
+# DataSource Proxy
+# (https://github.com/gavlyukovskiy/spring-boot-data-source-decorator)
+# It allows us to log the SQL statements that are batched by Hibernate batchSize
+##
+decorator:
+  datasource:
+    datasource-proxy:
+      multiline: true
+      query:
+        enable-logging: true
+        log-level: info
+
+##
+# Logging
+##
+logging:
+  level:
+    br.com.deveficiente.nobank.proposals.integration.FinancialAnalysisClient: DEBUG
+    br.com.deveficiente.nobank.cards.integration.CardsClient: DEBUG
