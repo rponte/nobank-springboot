@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.LockModeType;
-import javax.persistence.QueryHint;
+import jakarta.persistence.LockModeType;
+import jakarta.persistence.QueryHint;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,7 +28,7 @@ public interface ProposalRepository extends JpaRepository<Proposal, UUID> {
      */
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @QueryHints({
-        @QueryHint(name = "javax.persistence.lock.timeout", value = (LockOptions.SKIP_LOCKED + ""))
+        @QueryHint(name = "jakarta.persistence.lock.timeout", value = (LockOptions.SKIP_LOCKED + ""))
     })
     public List<Proposal> findTop50ByStatusOrderByCreatedAtAsc(ProposalStatus eligible);
 

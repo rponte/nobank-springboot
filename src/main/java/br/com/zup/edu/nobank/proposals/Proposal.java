@@ -2,7 +2,7 @@ package br.com.zup.edu.nobank.proposals;
 
 import br.com.zup.edu.nobank.cards.Card;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
