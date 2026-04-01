@@ -8,6 +8,11 @@
     "headers": {
       "Content-Type": "application/json"
     },
-    "bodyFileName" : "proposal-eligible.json"
+    "bodyFileName" : "proposal-eligible.json",
+    "delayDistribution": {
+      "type": "uniform",
+      "lower": 100,
+      "upper": 2000
+    }
   }
 }
