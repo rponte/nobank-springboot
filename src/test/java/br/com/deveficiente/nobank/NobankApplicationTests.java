@@ -1,4 +1,4 @@
-package br.com.zup.edu.nobank;
+package br.com.deveficiente.nobank;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

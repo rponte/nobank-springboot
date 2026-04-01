@@ -1,4 +1,4 @@
-package br.com.zup.edu.nobank.cards;
+package br.com.deveficiente.nobank.cards;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

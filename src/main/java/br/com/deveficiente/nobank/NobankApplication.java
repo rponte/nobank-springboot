@@ -1,4 +1,4 @@
-package br.com.zup.edu.nobank;
+package br.com.deveficiente.nobank;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

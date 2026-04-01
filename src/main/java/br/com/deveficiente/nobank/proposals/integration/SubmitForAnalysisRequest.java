@@ -1,6 +1,6 @@
-package br.com.zup.edu.nobank.proposals.integration;
+package br.com.deveficiente.nobank.proposals.integration;
 
-import br.com.zup.edu.nobank.proposals.Proposal;
+import br.com.deveficiente.nobank.proposals.Proposal;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SubmitForAnalysisRequest {

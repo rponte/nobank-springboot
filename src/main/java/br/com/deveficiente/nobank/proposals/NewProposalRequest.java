@@ -1,4 +1,4 @@
-package br.com.zup.edu.nobank.proposals;
+package br.com.deveficiente.nobank.proposals;
 
 import org.hibernate.validator.constraints.br.CPF;
 

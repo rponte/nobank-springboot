@@ -1,4 +1,4 @@
-package br.com.zup.edu.nobank.cards;
+package br.com.deveficiente.nobank.cards;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,6 +1,6 @@
-package br.com.zup.edu.nobank.proposals;
+package br.com.deveficiente.nobank.proposals;
 
-import br.com.zup.edu.nobank.cards.Card;
+import br.com.deveficiente.nobank.cards.Card;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;

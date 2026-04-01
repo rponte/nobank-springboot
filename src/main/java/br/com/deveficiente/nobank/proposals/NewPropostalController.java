@@ -1,8 +1,8 @@
-package br.com.zup.edu.nobank.proposals;
+package br.com.deveficiente.nobank.proposals;
 
-import br.com.zup.edu.nobank.proposals.integration.FinancialAnalysisClient;
-import br.com.zup.edu.nobank.proposals.integration.SubmitForAnalysisRequest;
-import br.com.zup.edu.nobank.proposals.integration.SubmitForAnalysisResponse;
+import br.com.deveficiente.nobank.proposals.integration.FinancialAnalysisClient;
+import br.com.deveficiente.nobank.proposals.integration.SubmitForAnalysisRequest;
+import br.com.deveficiente.nobank.proposals.integration.SubmitForAnalysisResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

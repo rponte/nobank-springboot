@@ -1,4 +1,4 @@
-package br.com.zup.edu.nobank.proposals;
+package br.com.deveficiente.nobank.proposals;
 
 public enum ProposalStatus {
 

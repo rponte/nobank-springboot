@@ -1,6 +1,6 @@
-package br.com.zup.edu.nobank.cards.integration;
+package br.com.deveficiente.nobank.cards.integration;
 
-import br.com.zup.edu.nobank.cards.Card;
+import br.com.deveficiente.nobank.cards.Card;
 
 import java.util.UUID;
 

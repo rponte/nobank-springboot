@@ -1,12 +1,12 @@
-package br.com.zup.edu.nobank;
+package br.com.deveficiente.nobank;
 
-import br.com.zup.edu.nobank.cards.Card;
-import br.com.zup.edu.nobank.cards.CardRepository;
-import br.com.zup.edu.nobank.cards.integration.CardDataResponse;
-import br.com.zup.edu.nobank.cards.integration.CardsClient;
-import br.com.zup.edu.nobank.proposals.Proposal;
-import br.com.zup.edu.nobank.proposals.ProposalRepository;
-import br.com.zup.edu.nobank.proposals.ProposalStatus;
+import br.com.deveficiente.nobank.cards.Card;
+import br.com.deveficiente.nobank.cards.CardRepository;
+import br.com.deveficiente.nobank.cards.integration.CardDataResponse;
+import br.com.deveficiente.nobank.cards.integration.CardsClient;
+import br.com.deveficiente.nobank.proposals.Proposal;
+import br.com.deveficiente.nobank.proposals.ProposalRepository;
+import br.com.deveficiente.nobank.proposals.ProposalStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
