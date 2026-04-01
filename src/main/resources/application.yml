@@ -47,9 +47,13 @@ spring:
           financialAnalysisClient:
             url: http://localhost:9999/
             logger-level: full
+            connect-timeout: 1000
+            read-timeout: 3000
           cardsClient:
             url: http://localhost:9999/
             logger-level: basic
+            connect-timeout: 5000
+            read-timeout: 5000
 
 ##
 # DataSource Proxy
