@@ -58,6 +58,9 @@
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- ************ -->
+		<!-- Testing dependencies -->
+		<!-- ************ -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -74,9 +77,19 @@
 			<version>3.10.0</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- ************ -->
+		<!-- Open Feign -->
+		<!-- ************ -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
+		<!-- ************ -->
+		<!-- Spring Retry -->
+		<!-- ************ -->
+		<dependency>
+			<groupId>org.springframework.retry</groupId>
+			<artifactId>spring-retry</artifactId>
 		</dependency>
 
 		<!-- DataSource Proxy to log real SQL statements -->

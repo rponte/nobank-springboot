@@ -151,6 +151,97 @@ class NewPropostalControllerTest {
     }
 
     @Test
+    void shouldRetryAndCreateProposalWhenServerFailsThenRecovers() throws Exception {
+        // scenario: first 2 calls return 500, third returns 200
+        wireMock.stubFor(
+                WireMock.post(urlEqualTo("/api/solicitacao"))
+                        .inScenario("retry")
+                        .whenScenarioStateIs(com.github.tomakehurst.wiremock.stubbing.Scenario.STARTED)
+                        .willReturn(aResponse()
+                                .withStatus(500)
+                                .withHeader("Content-Type", "application/json")
+                                .withBody("""
+                                        { "error": "Internal Server Error" }
+                                        """))
+                        .willSetStateTo("FIRST_RETRY")
+        );
+        wireMock.stubFor(
+                WireMock.post(urlEqualTo("/api/solicitacao"))
+                        .inScenario("retry")
+                        .whenScenarioStateIs("FIRST_RETRY")
+                        .willReturn(aResponse()
+                                .withStatus(500)
+                                .withHeader("Content-Type", "application/json")
+                                .withBody("""
+                                        { "error": "Internal Server Error" }
+                                        """))
+                        .willSetStateTo("SECOND_RETRY")
+        );
+        wireMock.stubFor(
+                WireMock.post(urlEqualTo("/api/solicitacao"))
+                        .inScenario("retry")
+                        .whenScenarioStateIs("SECOND_RETRY")
+                        .willReturn(aResponse()
+                                .withStatus(200)
+                                .withHeader("Content-Type", "application/json")
+                                .withBody("""
+                                        {
+                                            "idProposta": "any-id",
+                                            "resultadoSolicitacao": "SEM_RESTRICAO"
+                                        }
+                                        """))
+        );
+
+        // action & validation: should succeed thanks to retry
+        mockMvc.perform(post("/api/v1/proposals")
+                        .contentType(APPLICATION_JSON)
+                        .content("""
+                                {
+                                    "document": "935.411.347-80",
+                                    "email": "joao@email.com",
+                                    "name": "Joao da Silva",
+                                    "address": "Rua das Tabajaras, 123",
+                                    "salary": 5000.00
+                                }
+                                """))
+                .andExpect(status().isCreated());
+
+        // verify: 3 calls were made (2 failures + 1 success)
+        wireMock.verify(3, postRequestedFor(urlEqualTo("/api/solicitacao")));
+    }
+
+    @Test
+    void shouldFailAfterAllRetriesExhausted() throws Exception {
+        // scenario: all calls return 500
+        wireMock.stubFor(
+                WireMock.post(urlEqualTo("/api/solicitacao"))
+                        .willReturn(aResponse()
+                                .withStatus(500)
+                                .withHeader("Content-Type", "application/json")
+                                .withBody("""
+                                        { "error": "Internal Server Error" }
+                                        """))
+        );
+
+        // action & validation: should fail after 3 attempts with 503
+        mockMvc.perform(post("/api/v1/proposals")
+                        .contentType(APPLICATION_JSON)
+                        .content("""
+                                {
+                                    "document": "935.411.347-80",
+                                    "email": "joao@email.com",
+                                    "name": "Joao da Silva",
+                                    "address": "Rua das Tabajaras, 123",
+                                    "salary": 5000.00
+                                }
+                                """))
+                .andExpect(status().isServiceUnavailable());
+
+        // verify: 3 calls were made (maxAttempts = 3)
+        wireMock.verify(3, postRequestedFor(urlEqualTo("/api/solicitacao")));
+    }
+
+    @Test
     void shouldRejectInvalidRequest() throws Exception {
         mockMvc.perform(post("/api/v1/proposals")
                         .contentType(APPLICATION_JSON)

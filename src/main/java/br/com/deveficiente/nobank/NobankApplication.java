@@ -3,8 +3,10 @@ package br.com.deveficiente.nobank;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+@EnableRetry
 @EnableScheduling
 @EnableFeignClients // does NOT work on @Configuration classes: https://github.com/spring-cloud/spring-cloud-openfeign/issues/301
 @SpringBootApplication

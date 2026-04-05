@@ -3,8 +3,13 @@ package br.com.deveficiente.nobank.proposals;
 import br.com.deveficiente.nobank.proposals.integration.FinancialAnalysisClient;
 import br.com.deveficiente.nobank.proposals.integration.SubmitForAnalysisRequest;
 import br.com.deveficiente.nobank.proposals.integration.SubmitForAnalysisResponse;
+import feign.FeignException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +24,8 @@ import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 @RestController
 public class NewPropostalController {
+
+    private static final Logger logger = LoggerFactory.getLogger(NewPropostalController.class);
 
     @Autowired
     private ProposalRepository repository;
@@ -48,6 +55,18 @@ public class NewPropostalController {
 
         return ResponseEntity.created(location)
                     .body(new NewProposalResponse(proposal));
+    }
+
+    @ExceptionHandler(FeignException.class)
+    public ResponseEntity<String> handleFeignException(FeignException ex) {
+        logger.error("Error calling external service: {}", ex.getMessage());
+        HttpStatus status = HttpStatus.resolve(ex.status());
+        if (status != null && status.is4xxClientError()) {
+            return ResponseEntity.status(status).body(ex.contentUTF8());
+        }
+        return ResponseEntity
+                .status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body("External service unavailable");
     }
 
 }
