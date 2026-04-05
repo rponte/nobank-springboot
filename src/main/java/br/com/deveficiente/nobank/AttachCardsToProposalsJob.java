@@ -76,7 +76,13 @@ public class AttachCardsToProposalsJob {
 
                 eligibleProposals.forEach(proposal -> {
 
-                    CardDataResponse cardData = cardsClient.findCardByProposalId(proposal.getId());
+                    CardDataResponse cardData;
+                    try {
+                        cardData = cardsClient.findCardByProposalId(proposal.getId());
+                    } catch (feign.FeignException e) {
+                        logger.error("Failed to fetch card for proposal '{}': {}", proposal.getId(), e.getMessage());
+                        return; // skip this proposal, try again next execution
+                    }
 
                     Card newCard = cardData.toModel();
                     cardRepository.save(newCard);
