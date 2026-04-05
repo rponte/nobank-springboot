@@ -11,7 +11,7 @@ services:
       - database-data:/var/lib/postgresql/data/ # persist data even if container shuts down
       - ./bootstrap:/docker-entrypoint-initdb.d
   wiremock: # https://www.alexhyett.com/mock-api-calls-wiremock/
-    image: "rodolpheche/wiremock"
+    image: "wiremock/wiremock:3.13.2"
     ports:
       - 9999:8080
     volumes:

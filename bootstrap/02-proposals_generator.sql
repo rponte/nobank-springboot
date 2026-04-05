@@ -11,4 +11,4 @@ select
 	,trunc((random() * 99999)::numeric, 2)                as salary
 	,'ELIGIBLE'                                           as status
 	,localtimestamp                                       as updated_at
-  from generate_series(1, 10000) s(i)
+  from generate_series(1, 10000) s(i);
