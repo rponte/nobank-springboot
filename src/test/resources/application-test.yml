@@ -1,0 +1,36 @@
+##
+# Spring Application
+##
+spring:
+  ##
+  # DataSource and JPA/Hibernate (PostgreSQL via Testcontainers)
+  ##
+  datasource:
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    url: jdbc:tc:postgresql:17:///nobank_test
+    hikari:
+      auto-commit: false
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        connection:
+          provider_disables_autocommit: true
+    ##
+    # Jackson
+    # https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto.spring-mvc.customize-jackson-objectmapper
+    # https://www.baeldung.com/spring-boot-customize-jackson-objectmapper
+    # https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/converter/json/Jackson2ObjectMapperBuilder.html
+    ##
+    jackson:
+      serialization:
+        indent_output: true
+
+logging:
+  level:
+    org.springframework.orm.jpa: DEBUG
+    org.springframework.transaction: DEBUG
+    org.springframework.transaction.interceptor: TRACE
+    org.springframework.jdbc.core: TRACE
