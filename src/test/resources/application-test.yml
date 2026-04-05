@@ -1,4 +1,11 @@
 ##
+# Disable scheduled jobs during tests
+##
+app:
+  scheduling:
+    enabled: false
+
+##
 # Spring Application
 ##
 spring:
