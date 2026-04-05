@@ -11,8 +11,8 @@
     "bodyFileName" : "proposal-eligible.json",
     "delayDistribution": {
       "type": "uniform",
-      "lower": 100,
-      "upper": 2000
+      "lower": 50,
+      "upper": 200
     }
   }
 }

@@ -47,12 +47,12 @@ spring:
           financialAnalysisClient:
             url: http://localhost:9999/
             logger-level: full
-            connect-timeout: 1000
-            read-timeout: 3000
+            connect-timeout: 250
+            read-timeout: 500
           cardsClient:
             url: http://localhost:9999/
             logger-level: basic
-            connect-timeout: 5000
+            connect-timeout: 500
             read-timeout: 5000
 
 ##
