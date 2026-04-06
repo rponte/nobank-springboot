@@ -29,11 +29,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        # batch size
-        jdbc:
-          batch_size: 50
-          order_inserts: true
-          order_updates: true
 
   ##
   # Integrations
@@ -47,48 +42,9 @@ spring:
           financialAnalysisClient:
             url: http://localhost:9999/
             logger-level: full
-            connect-timeout: 250
-            read-timeout: 500
           cardsClient:
             url: http://localhost:9999/
             logger-level: basic
-            connect-timeout: 500
-            read-timeout: 5000
-
-##
-# Actuator
-##
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,metrics,scheduledtasks,prometheus
-  endpoint:
-    health:
-      show-details: always
-      show-components: always
-  info:
-    env:
-      enabled: true
-    build:
-      enabled: true
-    java:
-      enabled: true
-    os:
-      enabled: true
-
-##
-# DataSource Proxy
-# (https://github.com/gavlyukovskiy/spring-boot-data-source-decorator)
-# It allows us to log the SQL statements that are batched by Hibernate batchSize
-##
-decorator:
-  datasource:
-    datasource-proxy:
-      multiline: true
-      query:
-        enable-logging: true
-        log-level: info
 
 ##
 # Logging
